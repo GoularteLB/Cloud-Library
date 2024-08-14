@@ -1,5 +1,6 @@
 package com.cloud.senac.library.entity;
 
+import com.cloud.senac.library.dto.LivroDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,5 +21,4 @@ public class Livro {
     private int estoque;
     @ManyToOne(fetch = FetchType.LAZY)
     private Autor autor;
-
 }
