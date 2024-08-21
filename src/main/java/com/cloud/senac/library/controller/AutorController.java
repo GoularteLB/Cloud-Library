@@ -3,10 +3,7 @@ package com.cloud.senac.library.controller;
 import com.cloud.senac.library.dto.AutorDto;
 import com.cloud.senac.library.service.IGenericService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/autor")
@@ -18,6 +15,11 @@ public class AutorController {
     @PostMapping
     public AutorDto cadastrar(AutorDto autorDto) {
         return autorService.Cadastrar(autorDto);
+    }
+
+    @PutMapping
+    public AutorDto editar(AutorDto autorDto) {
+        return autorService.Editar(autorDto);
     }
 
     @DeleteMapping
