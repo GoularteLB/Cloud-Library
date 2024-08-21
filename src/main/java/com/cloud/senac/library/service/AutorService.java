@@ -27,8 +27,11 @@ public class AutorService implements IGenericService<AutorDto> {
     }
 
     @Override
-    public void Excluir(AutorDto object) {
-
+    public void Excluir(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Precisa ser fornecido o id do autor para a exclusão");
+        }
+        autorRepository.deleteById(id);
     }
 
     @Override
