@@ -34,14 +34,14 @@ public class AutorServiceTest {
 
         @Test
         void shouldReturnIllegalArgumentException_whenAutorNameInAutoDtoIsNull() {
-            assertThatCode(() -> autorService.Cadastrar(new AutorDto(null))).isInstanceOf(IllegalArgumentException.class);
+            assertThatCode(() -> autorService.Cadastrar(new AutorDto(null,null))).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
         void shouldReturnAutorDto_whenAutorDtoHasValidName() {
             String autorName = "Arthur Connon Doyle";
             assertThatCode(() -> {
-                        AutorDto autorDto = autorService.Cadastrar(new AutorDto(autorName));
+                        AutorDto autorDto = autorService.Cadastrar(new AutorDto(null, autorName));
                         Assertions.assertNotNull(autorDto);
                         Assertions.assertEquals(autorName, autorDto.nomeAutor());
                     }
@@ -53,7 +53,7 @@ public class AutorServiceTest {
         void shouldReturnNonUniqueResultException_whenHasTheAutorNameInDatabase() {
             String autorName = "Arthur Connon Doyle";
             when(autorRepository.save(any())).thenThrow(NonUniqueResultException.class);
-            assertThatCode(() -> autorService.Cadastrar(new AutorDto(autorName))).isInstanceOf(NonUniqueResultException.class);
+            assertThatCode(() -> autorService.Cadastrar(new AutorDto(null, autorName))).isInstanceOf(NonUniqueResultException.class);
         }
 
     }
@@ -73,6 +73,40 @@ public class AutorServiceTest {
         void shouldReturnIllegalArgumentException_whenAutorIdIsNull() {
             assertThatCode(() -> autorService.Excluir(null)).isInstanceOf(IllegalArgumentException.class);
             verify(autorRepository, never()).deleteById(any());
+        }
+
+    }
+
+    @Nested
+    class editarTests {
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAutorDtoIsNull() {
+            assertThatCode(() -> autorService.Editar( null)).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAutorNameInAutoDtoIsNull() {
+            assertThatCode(() -> autorService.Editar(new AutorDto(null,null))).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAuthorIdIsNull() {
+            String autorName = "Cloud Library";
+            assertThatCode(
+                    () -> autorService.Editar(new AutorDto(null ,autorName))
+            ).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void shouldcallUodateAuthorName() {
+            String autorName = "Cloud Library";
+            assertThatCode(
+                    () -> {
+                        AutorDto autorDto = autorService.Editar(new AutorDto(1L ,autorName));
+                        Assertions.assertNotNull(autorDto.autorId());
+                    }
+            ).doesNotThrowAnyException();
         }
 
     }
