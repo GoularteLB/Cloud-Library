@@ -16,7 +16,7 @@ public class LivroService implements IGenericService {
     }
 
 
-    public void Excluir(Object object) {
+    public void Excluir(Long object) {
         return;
     }
 
