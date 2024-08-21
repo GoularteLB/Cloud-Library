@@ -39,4 +39,10 @@ public class AutorService implements IGenericService<AutorDto> {
         return null;
     }
 
+    private void checkIfAutorDtoIsValid(final AutorDto autorDto) {
+        if (autorDto == null || autorDto.nomeAutor() == null) {
+            throw new IllegalArgumentException("Nome autor precisa ser preenchido no cadastro");
+        }
+    }
+
 }
