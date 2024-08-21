@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AutorService implements IGenericService {
+public class AutorService implements IGenericService<Object> {
 
     @Override
     public Object Cadastrar(Object object) {
@@ -18,7 +18,7 @@ public class AutorService implements IGenericService {
     }
 
     @Override
-    public void Excluir(Object object) {
+    public void Excluir(Long object) {
 
     }
 

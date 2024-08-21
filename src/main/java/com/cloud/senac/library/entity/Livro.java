@@ -17,8 +17,8 @@ public class Livro {
     private String categoria;
     @Column(nullable = false)
     private Enum status;
-    @Column(nullable = false)
-    private int estoque;
     @ManyToOne(fetch = FetchType.LAZY)
     private Autor autor;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Estoque estoque;
 }
