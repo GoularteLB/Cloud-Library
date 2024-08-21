@@ -1,16 +1,20 @@
 package com.cloud.senac.library.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
-public class Autor {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Autor extends Object {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+    @Column(unique = true)
     private String nomeAutor;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Livro> livroList;
