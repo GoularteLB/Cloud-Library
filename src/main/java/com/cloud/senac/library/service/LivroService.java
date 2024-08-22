@@ -1,32 +1,36 @@
 package com.cloud.senac.library.service;
 
 import com.cloud.senac.library.dto.LivroDto;
+import com.cloud.senac.library.entity.Livro;
+import com.cloud.senac.library.repository.LivroRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class LivroService implements IGenericService<LivroDto> {
 
-    @Override
-    public LivroDto Cadastrar(LivroDto object) {
-        if(object != null) {
-            throw new RuntimeException();
-        }
-        return null;
-    }
+    private final LivroRepository livroRepository;
 
     @Override
+    public LivroDto Cadastrar(LivroDto livroDto) {
+        if(livroDto == null || livroDto.titulo() == null){
+            throw new IllegalArgumentException("Titulo do livro necessita ser preenchido");
+        }
+        livroRepository.save(new Livro( livroDto.id() ,null,livroDto.titulo(), livroDto.categoria(), livroDto.status(), livroDto.estoque(), null));
+        return livroDto;
+    }
+
     public LivroDto Editar(LivroDto object) {
         return null;
     }
 
 
-    @Override
-    public void Excluir(Long object) {
+    public void Excluir(LivroDto object) {
         return;
     }
 
 
-    @Override
     public LivroDto Listar(LivroDto object) {
         return null;
     }

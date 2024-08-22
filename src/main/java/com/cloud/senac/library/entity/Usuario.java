@@ -2,11 +2,14 @@ package com.cloud.senac.library.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
 import java.time.LocalDate;
 
-@Data
+@Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario{
 
     @Id
