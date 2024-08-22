@@ -1,18 +1,7 @@
 package com.cloud.senac.library.dto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
-@AllArgsConstructor
-public class LivroDto {
 
-    private String sinopse;
 
-    private String titulo;
+public record LivroDto(String titulo, String sinopse, String categoria, Enum status, int estoque) {
 
-    private String categoria;
-
-    private Enum status;
-
-    private int estoque;
 }

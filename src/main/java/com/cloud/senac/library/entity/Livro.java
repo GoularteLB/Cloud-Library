@@ -2,10 +2,13 @@ package com.cloud.senac.library.entity;
 
 import com.cloud.senac.library.dto.LivroDto;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

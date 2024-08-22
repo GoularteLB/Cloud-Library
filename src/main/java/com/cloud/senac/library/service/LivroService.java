@@ -17,7 +17,7 @@ public class LivroService implements IGenericService<LivroDto> {
         if(livroDto == null || livroDto.titulo() == null){
             throw new IllegalArgumentException("Titulo do livro necessita ser preenchido");
         }
-        livroRepository.save(new Livro( livroDto.id() ,null,livroDto.titulo(), livroDto.categoria(), livroDto.status(), livroDto.estoque(), null));
+        livroRepository.save(new Livro( null ,null,livroDto.titulo(), livroDto.categoria(), livroDto.status(), livroDto.estoque(), null));
         return livroDto;
     }
 
@@ -26,7 +26,7 @@ public class LivroService implements IGenericService<LivroDto> {
     }
 
 
-    public void Excluir(LivroDto object) {
+    public void Excluir(Long object) {
         return;
     }
 
