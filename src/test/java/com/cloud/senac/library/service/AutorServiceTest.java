@@ -4,6 +4,7 @@ import com.cloud.senac.library.dto.AutorDto;
 import com.cloud.senac.library.repository.AutorRepository;
 import jakarta.persistence.NonUniqueResultException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,33 +23,94 @@ public class AutorServiceTest {
     @Mock
     private AutorRepository autorRepository;
 
-    @Test
-    void shouldReturnIllegalArgumentException_whenAutorDtoIsNull() {
-        assertThatCode(() -> autorService.Cadastrar(null)).isInstanceOf(IllegalArgumentException.class);
+
+    @Nested
+    class cadastroTests{
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAutorDtoIsNull() {
+            assertThatCode(() -> autorService.Cadastrar(null)).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAutorNameInAutoDtoIsNull() {
+            assertThatCode(() -> autorService.Cadastrar(new AutorDto(null,null))).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void shouldReturnAutorDto_whenAutorDtoHasValidName() {
+            String autorName = "Arthur Connon Doyle";
+            assertThatCode(() -> {
+                        AutorDto autorDto = autorService.Cadastrar(new AutorDto(null, autorName));
+                        Assertions.assertNotNull(autorDto);
+                        Assertions.assertEquals(autorName, autorDto.nomeAutor());
+                    }
+            ).doesNotThrowAnyException();
+            verify(autorRepository, times(1)).save(any());
+        }
+
+        @Test
+        void shouldReturnNonUniqueResultException_whenHasTheAutorNameInDatabase() {
+            String autorName = "Arthur Connon Doyle";
+            when(autorRepository.save(any())).thenThrow(NonUniqueResultException.class);
+            assertThatCode(() -> autorService.Cadastrar(new AutorDto(null, autorName))).isInstanceOf(NonUniqueResultException.class);
+        }
+
     }
 
-    @Test
-    void shouldReturnIllegalArgumentException_whenAutorNameInAutoDtoIsNull() {
-        assertThatCode(() -> autorService.Cadastrar(new AutorDto(null))).isInstanceOf(IllegalArgumentException.class);
+
+    @Nested
+    class excluirTests {
+
+        @Test
+        void shouldBeCalledDeleteById_whenExcluirMethodHasBeenCalled() {
+            Long autorId = 1L;
+            autorService.Excluir(autorId);
+            verify(autorRepository, times(1)).deleteById(autorId);
+        }
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAutorIdIsNull() {
+            assertThatCode(() -> autorService.Excluir(null)).isInstanceOf(IllegalArgumentException.class);
+            verify(autorRepository, never()).deleteById(any());
+        }
+
     }
 
-    @Test
-    void shouldReturnAutorDto_whenAutorDtoHasValidName() {
-        String autorName = "Arthur Connon Doyle";
-        assertThatCode(() -> {
-            AutorDto autorDto = autorService.Cadastrar(new AutorDto(autorName));
-            Assertions.assertNotNull(autorDto);
-            Assertions.assertEquals(autorName, autorDto.nomeAutor());
-            }
-        ).doesNotThrowAnyException();
-        verify(autorRepository, times(1)).save(any());
+    @Nested
+    class editarTests {
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAutorDtoIsNull() {
+            assertThatCode(() -> autorService.Editar( null)).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAutorNameInAutoDtoIsNull() {
+            assertThatCode(() -> autorService.Editar(new AutorDto(null,null))).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void shouldReturnIllegalArgumentException_whenAuthorIdIsNull() {
+            String autorName = "Cloud Library";
+            assertThatCode(
+                    () -> autorService.Editar(new AutorDto(null ,autorName))
+            ).isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void shouldcallUodateAuthorName() {
+            String autorName = "Cloud Library";
+            assertThatCode(
+                    () -> {
+                        AutorDto autorDto = autorService.Editar(new AutorDto(1L ,autorName));
+                        Assertions.assertNotNull(autorDto.autorId());
+                    }
+            ).doesNotThrowAnyException();
+        }
+
     }
 
-    @Test
-    void shouldReturnNonUniqueResultException_whenHasTheAutorNameInDatabase() {
-        String autorName = "Arthur Connon Doyle";
-        when(autorRepository.save(any())).thenThrow(NonUniqueResultException.class);
-        assertThatCode(() -> autorService.Cadastrar(new AutorDto(autorName))).isInstanceOf(NonUniqueResultException.class);
-    }
+
 
 }

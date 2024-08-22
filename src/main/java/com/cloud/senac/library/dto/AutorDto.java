@@ -1,3 +1,6 @@
 package com.cloud.senac.library.dto;
 
-public record AutorDto(String nomeAutor) { }
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record AutorDto(Long autorId, String nomeAutor) { }
