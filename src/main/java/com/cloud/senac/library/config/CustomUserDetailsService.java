@@ -1,6 +1,6 @@
 package com.cloud.senac.library.config;
 
-import com.cloud.senac.library.domain.entity.Usuario;
+import com.cloud.senac.library.entity.Usuario;
 import com.cloud.senac.library.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
