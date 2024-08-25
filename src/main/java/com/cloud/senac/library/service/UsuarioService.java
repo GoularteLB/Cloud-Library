@@ -4,6 +4,8 @@ import com.cloud.senac.library.entity.Usuario;
 import com.cloud.senac.library.service.IGenericService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioService implements IGenericService <Usuario>{
 
@@ -22,7 +24,7 @@ public class UsuarioService implements IGenericService <Usuario>{
     }
 
 
-    public Usuario Listar(Usuario usuario) {
+    public List<Usuario> Listar(Usuario usuario) {
         return null;
     }
 }

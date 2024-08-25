@@ -6,6 +6,8 @@ import com.cloud.senac.library.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class LivroService implements IGenericService<LivroDto> {
@@ -31,7 +33,7 @@ public class LivroService implements IGenericService<LivroDto> {
     }
 
 
-    public LivroDto Listar(LivroDto object) {
+    public List<LivroDto> Listar(LivroDto object) {
         return null;
     }
 }
