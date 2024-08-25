@@ -42,9 +42,13 @@ public class AutorService implements IGenericService<AutorDto> {
     }
 
     @Override
-    public AutorDto Listar(AutorDto autorDto) {
-        checkIfAutorDtoIsValid(autorDto);
-        return null;
+    public List<AutorDto> Listar(AutorDto autorDto) {
+        if (autorDto.nomeAutor() != null && !autorDto.nomeAutor().isBlank()) {
+            return autorRepository.listAuthorByName(autorDto.nomeAutor()).stream().map(autorMapper::toDTO).toList();
+        } else if (autorDto.autorId() != null) {
+            return autorRepository.findById(autorDto.autorId()).stream().map(autorMapper::toDTO).toList();
+        }
+        return autorRepository.findAll().stream().map(autorMapper::toDTO).toList();
     }
 
     private void checkIfAutorDtoIsValid(final AutorDto autorDto) {
