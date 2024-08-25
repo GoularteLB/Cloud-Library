@@ -1,4 +1,4 @@
-package com.cloud.senac.library.config;
+package com.cloud.senac.library.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.cloud.senac.library.config;
+package com.cloud.senac.library.config.security;
 
 import com.cloud.senac.library.entity.Usuario;
 import com.cloud.senac.library.repository.UsuarioRepository;

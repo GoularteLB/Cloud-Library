@@ -1,8 +1,7 @@
-package com.cloud.senac.library.config;
+package com.cloud.senac.library.config.security;
 
 import com.cloud.senac.library.entity.Usuario;
 import com.cloud.senac.library.repository.UsuarioRepository;
-import com.cloud.senac.library.config.security.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
