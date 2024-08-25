@@ -16,16 +16,19 @@ public class AutorController {
     private final IGenericService<AutorDto> autorService;
 
     @PostMapping
+    @Operation(summary = "Save new Author by AuthorDTO")
     public AutorDto cadastrar(AutorDto autorDto) {
         return autorService.Cadastrar(autorDto);
     }
 
     @PutMapping
+    @Operation(summary = "Edit Author with autorDto")
     public AutorDto editar(AutorDto autorDto) {
         return autorService.Editar(autorDto);
     }
 
     @DeleteMapping
+    @Operation(summary = "Delete Author by Id")
     public void excluir(Long authorId) {
         autorService.Excluir(authorId);
     }
