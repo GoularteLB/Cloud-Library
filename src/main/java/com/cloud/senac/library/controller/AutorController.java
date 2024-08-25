@@ -26,4 +26,10 @@ public class AutorController {
     public void excluir(Long authorId) {
         autorService.Excluir(authorId);
     }
+
+    @GetMapping
+    public void listar(AutorDto autorDto) {
+        autorService.Listar(autorDto);
+    }
+
 }
