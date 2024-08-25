@@ -2,15 +2,19 @@ package com.cloud.senac.library.service;
 
 import com.cloud.senac.library.dto.AutorDto;
 import com.cloud.senac.library.entity.Autor;
+import com.cloud.senac.library.mapper.IGenericMapper;
 import com.cloud.senac.library.repository.AutorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AutorService implements IGenericService<AutorDto> {
 
     private final AutorRepository autorRepository;
+    private final IGenericMapper<AutorDto, Autor> autorMapper;
 
     @Override
     public AutorDto Cadastrar(AutorDto autorDto) {
