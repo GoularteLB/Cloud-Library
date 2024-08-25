@@ -17,7 +17,7 @@ public class UsuarioService implements IGenericService <Usuario>{
     }
 
 
-    public void Excluir(Usuario usuario) {
+    public void Excluir(Long usuario) {
         return;
     }
 
