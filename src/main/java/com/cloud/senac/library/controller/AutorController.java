@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/autor")
+@RequestMapping("/admin/autor")
 @RequiredArgsConstructor
 @Tag(name = "Author Controller")
 public class AutorController {

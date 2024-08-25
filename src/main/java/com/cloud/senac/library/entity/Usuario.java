@@ -24,7 +24,7 @@ public class Usuario{
     private int cpf;
     @Column(nullable = false)
     private String senha;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     private boolean adm;
 
