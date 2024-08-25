@@ -30,4 +30,12 @@ public class AuthService {
         return ResponseEntity.badRequest().build();
     }
 
+    public ResponseEntity login(@RequestBody UsuarioDto usuarioDto){
+        Usuario usuario = this.usuarioRepository.findByEmail(usuarioDto.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
+        if(passwordEncoder.matches(usuarioDto.getSenha(), usuario.getSenha())) {
+            String token = this.tokenService.generateToken(usuario);
+            return ResponseEntity.ok(token);
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }
