@@ -19,7 +19,7 @@ public class AutorService implements IGenericService<AutorDto> {
     @Override
     public AutorDto Cadastrar(AutorDto autorDto) {
         checkIfAutorDtoIsValid(autorDto);
-        autorRepository.save(new Autor(null, autorDto.nomeAutor(), null));
+        autorRepository.save(autorMapper.toEntity(autorDto));
         return autorDto;
     }
 
