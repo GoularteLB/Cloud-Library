@@ -2,20 +2,24 @@ package com.cloud.senac.library.service;
 
 import com.cloud.senac.library.dto.AutorDto;
 import com.cloud.senac.library.entity.Autor;
+import com.cloud.senac.library.mapper.IGenericMapper;
 import com.cloud.senac.library.repository.AutorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AutorService implements IGenericService<AutorDto> {
 
     private final AutorRepository autorRepository;
+    private final IGenericMapper<AutorDto, Autor> autorMapper;
 
     @Override
     public AutorDto Cadastrar(AutorDto autorDto) {
         checkIfAutorDtoIsValid(autorDto);
-        autorRepository.save(new Autor(null, autorDto.nomeAutor(), null));
+        autorRepository.save(autorMapper.toEntity(autorDto));
         return autorDto;
     }
 
@@ -38,9 +42,13 @@ public class AutorService implements IGenericService<AutorDto> {
     }
 
     @Override
-    public AutorDto Listar(AutorDto autorDto) {
-        checkIfAutorDtoIsValid(autorDto);
-        return null;
+    public List<AutorDto> Listar(AutorDto autorDto) {
+        if (autorDto.nomeAutor() != null && !autorDto.nomeAutor().isBlank()) {
+            return autorRepository.listAuthorByName(autorDto.nomeAutor()).stream().map(autorMapper::toDTO).toList();
+        } else if (autorDto.autorId() != null) {
+            return autorRepository.findById(autorDto.autorId()).stream().map(autorMapper::toDTO).toList();
+        }
+        return autorRepository.findAll().stream().map(autorMapper::toDTO).toList();
     }
 
     private void checkIfAutorDtoIsValid(final AutorDto autorDto) {
