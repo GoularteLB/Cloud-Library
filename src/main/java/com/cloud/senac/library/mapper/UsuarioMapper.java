@@ -39,4 +39,12 @@ public class UsuarioMapper implements IUsuarioMapper<UsuarioDto, Usuario, Regist
                 dto.isAdm()
         );
     }
+
+    @Override
+    public UsuarioDto convertRegisterToDto(RegisterDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new UsuarioDto(null, dto.nome(), dto.dtNascimento(), dto.cpf(), dto.senha(), dto.email(), false);
+    }
 }
