@@ -16,7 +16,7 @@ public class UsuarioDto {
 
     private LocalDate dtNascimento;
 
-    private int cpf;
+    private Integer cpf;
 
     private String senha;
 
