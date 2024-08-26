@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService implements IAuthService<LoginDto, RegisterDto> {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
