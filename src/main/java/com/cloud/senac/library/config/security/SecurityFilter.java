@@ -26,7 +26,7 @@ public class bSecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().contains("/swagger-ui/") || request.getRequestURI().contains("/v3/api-docs") || request.getRequestURI().contains("auth")) {
+        if (request.getRequestURI().contains("/swagger-ui/") || request.getRequestURI().contains("/v3/api-docs") || (request.getRequestURI().contains("auth") || !request.getRequestURI().contains("/register/adm"))) {
             filterChain.doFilter(request, response);
             return;
         }

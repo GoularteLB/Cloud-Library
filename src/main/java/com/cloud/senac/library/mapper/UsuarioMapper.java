@@ -1,11 +1,12 @@
 package com.cloud.senac.library.mapper;
 
 import com.cloud.senac.library.dto.UsuarioDto;
+import com.cloud.senac.library.dto.auth.RegisterDto;
 import com.cloud.senac.library.entity.Usuario;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioMapper implements IGenericMapper<UsuarioDto, Usuario> {
+public class UsuarioMapper implements IUsuarioMapper<UsuarioDto, Usuario, RegisterDto> {
 
     @Override
     public UsuarioDto toDTO(Usuario entity) {
@@ -37,5 +38,13 @@ public class UsuarioMapper implements IGenericMapper<UsuarioDto, Usuario> {
                 dto.getEmail(),
                 dto.isAdm()
         );
+    }
+
+    @Override
+    public UsuarioDto convertRegisterToDto(RegisterDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new UsuarioDto(null, dto.nome(), dto.dtNascimento(), dto.cpf(), dto.senha(), dto.email(), false);
     }
 }
