@@ -20,6 +20,7 @@ public class AuthService implements IAuthService<LoginDto, RegisterDto> {
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService tokenService;
+    private final IUsuarioMapper<UsuarioDto, Usuario, RegisterDto> usuarioMapper;
 
     public ResponseEntity register(@RequestBody UsuarioDto usuarioDto){
         Optional<Usuario> user = this.usuarioRepository.findByEmail(usuarioDto.getEmail());
