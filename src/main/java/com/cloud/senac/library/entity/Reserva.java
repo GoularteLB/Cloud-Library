@@ -1,10 +1,13 @@
 package com.cloud.senac.library.entity;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,9 +21,17 @@ public class Reserva {
     private LocalDate dataInicial;
     private LocalDate dataFinal;
     private LocalDate dataEntrega;
-    private Double multa;
+    private Double multaPorDia;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Livro livro;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Livro> livroList;
+
+    @PrePersist
+    void prePersist() {
+        if (dataInicial == null) {
+            dataInicial = LocalDate.now();
+        }
+    }
 }
