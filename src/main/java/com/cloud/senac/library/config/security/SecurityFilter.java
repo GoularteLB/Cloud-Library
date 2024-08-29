@@ -19,7 +19,7 @@ import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
-public class bSecurityFilter extends OncePerRequestFilter {
+public class SecurityFilter extends OncePerRequestFilter {
 
     private final UsuarioRepository usuarioRepository;
     private final JwtTokenService jwtTokenService;
