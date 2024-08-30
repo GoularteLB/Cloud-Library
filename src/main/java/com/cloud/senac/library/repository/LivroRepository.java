@@ -11,7 +11,7 @@ import java.util.List;
 public interface LivroRepository extends JpaRepository<Livro, Long> {
 
     @Query("""
-            SELECT a FROM Livro l WHERE l.titulo ILIKE : titulo
+            SELECT l FROM Livro l WHERE l.titulo ILIKE :titulo
             """)
     List<Livro> findLivroByName(String titulo);
 
