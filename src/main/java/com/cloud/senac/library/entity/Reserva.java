@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Reserva {
     private LocalDate dataInicial;
     private LocalDate dataFinal;
     private LocalDate dataEntrega;
-    private Double multaPorDia;
+    private BigDecimal multaPorDia;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;

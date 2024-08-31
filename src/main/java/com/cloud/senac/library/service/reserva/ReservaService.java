@@ -2,18 +2,23 @@ package com.cloud.senac.library.service.reserva;
 
 import com.cloud.senac.library.dto.reserva.CadastroReservaDto;
 import com.cloud.senac.library.dto.reserva.ReservaDto;
+import com.cloud.senac.library.entity.Reserva;
+import com.cloud.senac.library.mapper.IReservaMapper;
 import com.cloud.senac.library.repository.ReservaRepository;
 import com.cloud.senac.library.service.validation.IGenericValidation;
 import com.cloud.senac.library.service.validation.livro.ILivroValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Vector;
 
 @Service
 @RequiredArgsConstructor
 public class ReservaService implements IReservaService<ReservaDto, CadastroReservaDto> {
 
+    private final IReservaMapper<ReservaDto, CadastroReservaDto, Reserva> reservaMapper;
     private final ReservaRepository reservaRepository;
     private final IGenericValidation usuarioValidationService;
     private final ILivroValidation livroValidationService;
@@ -22,26 +27,36 @@ public class ReservaService implements IReservaService<ReservaDto, CadastroReser
     public ReservaDto reservar(CadastroReservaDto dto) {
         usuarioValidationService.ifNotExistThrowException(dto.usuarioId());
         livroValidationService.ifNotExistThrowException(dto.listaDeLivros());
-        return null;
+        Reserva reserva = reservaMapper.convertDtoCadastroToEntity(dto);
+        return reservaMapper.toDTO(reservaRepository.save(reserva));
     }
 
     @Override
     public ReservaDto consultarReserva(Long reservaId) {
-        return null;
+        return reservaMapper.toDTO(
+                reservaRepository.findById(reservaId).orElseThrow(() -> new RuntimeException("Reserva não encontrado"))
+        );
     }
 
     @Override
     public List<ReservaDto> listarReservas() {
-        return List.of();
+        return reservaRepository.findAll().stream().map(reservaMapper::toDTO).toList();
     }
 
     @Override
     public List<ReservaDto> listarReservasByUsuarioId(Long usuarioId) {
-        return List.of();
+        usuarioValidationService.ifNotExistThrowException(usuarioId);
+        return reservaRepository.findReservaByUsuarioId(usuarioId)
+                .stream()
+                .map(reservaMapper::toDTO)
+                .toList();
     }
 
     @Override
     public String quitarReserva(Long reservaId) {
-        return "";
+        Reserva reserva = reservaRepository.findById(reservaId).orElseThrow(() -> new RuntimeException("Reserva não encontrado"));
+        reserva.setDataEntrega(LocalDate.now());
+        reservaRepository.save(reserva);
+        return String.format("Reserva %s quitada com sucesso!", reservaId);
     }
 }
