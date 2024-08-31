@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/livrp")
+@RequestMapping("/admin/livrp")
 @RequiredArgsConstructor
 @Tag(name = "Livro Controller")
 public class LivroController {
