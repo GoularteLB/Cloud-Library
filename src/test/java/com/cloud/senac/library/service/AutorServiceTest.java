@@ -1,7 +1,8 @@
 package com.cloud.senac.library.service;
 
-import com.cloud.senac.library.dto.AutorDto;
-import com.cloud.senac.library.repository.AutorRepository;
+import com.cloud.senac.library.adapter.in.dto.AutorDto;
+import com.cloud.senac.library.adapter.out.repository.AutorRepository;
+import com.cloud.senac.library.core.service.AutorService;
 import jakarta.persistence.NonUniqueResultException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
