@@ -2,21 +2,18 @@ package com.cloud.senac.library.core.service;
 
 import com.cloud.senac.library.adapter.in.dto.LivroDto;
 import com.cloud.senac.library.adapter.out.entity.Livro;
-import com.cloud.senac.library.adapter.in.mapper.IGenericMapper;
 import com.cloud.senac.library.adapter.out.repository.LivroRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class LivroService implements IGenericService<LivroDto> {
+public class LivroService {
 
     private final LivroRepository livroRepository;
-    private final IGenericMapper<LivroDto, Livro> livroMapper;
 
-    @Override
+    public LivroService(LivroRepository livroRepository) {
+        this.livroRepository = livroRepository;
+    }
+
     public LivroDto Cadastrar(LivroDto livroDto) {
         if (livroDto == null || livroDto.titulo() == null) {
             throw new IllegalArgumentException("Titulo do livro necessita ser preenchido");
@@ -33,7 +30,6 @@ public class LivroService implements IGenericService<LivroDto> {
         return livroDto;
     }
 
-    @Override
     public void Excluir(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("precisa ser fornecido um id de livro valido");
@@ -41,7 +37,6 @@ public class LivroService implements IGenericService<LivroDto> {
         livroRepository.deleteById(id);
     }
 
-    @Override
     public List<LivroDto> Listar(final LivroDto livroDto) {
         if (livroDto.titulo() != null && !livroDto.titulo().isBlank()) {
             return livroRepository.findLivroByName(livroDto.titulo()).stream().map(livroMapper::toDTO).toList();

@@ -1,58 +1,51 @@
 package com.cloud.senac.library.core.service;
 
-import com.cloud.senac.library.adapter.in.dto.AutorDto;
-import com.cloud.senac.library.adapter.out.entity.Autor;
-import com.cloud.senac.library.adapter.in.mapper.IGenericMapper;
-import com.cloud.senac.library.adapter.out.repository.AutorRepository;
+import com.cloud.senac.library.core.domain.Autor;
+import com.cloud.senac.library.core.port.out.AutorRepositoryPort;
 
 import java.util.List;
 
-public class AutorService implements IGenericService<AutorDto> {
+public class AutorService {
 
-    public AutorService(AutorRepository autorRepository, IGenericMapper iGenericMapper) {
-        this.autorRepository = autorRepository;
-        this.autorMapper = iGenericMapper;
-    }
-    private AutorRepository autorRepository;
-    private IGenericMapper<AutorDto, Autor> autorMapper;
+    private AutorRepositoryPort autorRepositoryPort;
 
-    @Override
-    public AutorDto Cadastrar(AutorDto autorDto) {
-        checkIfAutorDtoIsValid(autorDto);
-        autorRepository.save(autorMapper.toEntity(autorDto));
-        return autorDto;
+    public AutorService(AutorRepositoryPort autorRepositoryPort) {
+        this.autorRepositoryPort = autorRepositoryPort;
     }
 
-    @Override
-    public AutorDto Editar(AutorDto autorDto) {
-        checkIfAutorDtoIsValid(autorDto);
-        if (autorDto.autorId() == null) {
+    public Autor Cadastrar(Autor autor) {
+//        checkIfAutorDtoIsValid(autorDto);
+        autorRepositoryPort.save(autor);
+        return autor;
+    }
+
+    public Autor Editar(Autor autor) {
+//        checkIfAutorDtoIsValid(autorDto);
+        if (autor.getId() == null) {
             throw new IllegalArgumentException("Precisa ser fornecido o id do autor para a exclusão");
         }
-        autorRepository.updateAuthorName(autorDto.autorId(), autorDto.nomeAutor());
-        return autorDto;
+        autorRepositoryPort.updateAuthorName(autor.getId(), autor.getNomeAutor());
+        return autor;
     }
 
-    @Override
     public void Excluir(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Precisa ser fornecido o id do autor para a exclusão");
         }
-        autorRepository.deleteById(id);
+        autorRepositoryPort.deleteById(id);
     }
 
-    @Override
-    public List<AutorDto> Listar(AutorDto autorDto) {
-        if (autorDto.nomeAutor() != null && !autorDto.nomeAutor().isBlank()) {
-            return autorRepository.listAuthorByName(autorDto.nomeAutor()).stream().map(autorMapper::toDTO).toList();
-        } else if (autorDto.autorId() != null) {
-            return autorRepository.findById(autorDto.autorId()).stream().map(autorMapper::toDTO).toList();
+    public List<Autor> Listar(Autor autor) {
+        if (autor.getNomeAutor() != null && !autor.getNomeAutor().isBlank()) {
+            return autorRepositoryPort.listAuthorByName(autor.getNomeAutor());
+        } else if (autor.getId() != null) {
+            return List.of(autorRepositoryPort.findById(autor.getId()).orElseThrow(RuntimeException::new));
         }
-        return autorRepository.findAll().stream().map(autorMapper::toDTO).toList();
+        return autorRepositoryPort.findAll();
     }
 
-    private void checkIfAutorDtoIsValid(final AutorDto autorDto) {
-        if (autorDto == null || autorDto.nomeAutor() == null) {
+    private void checkIfAutorDtoIsValid(final Autor autor) {
+        if (autor == null || autor.getNomeAutor() == null) {
             throw new IllegalArgumentException("Nome autor precisa ser preenchido no cadastro");
         }
     }

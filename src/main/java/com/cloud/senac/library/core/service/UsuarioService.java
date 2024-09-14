@@ -2,23 +2,20 @@ package com.cloud.senac.library.core.service;
 
 import com.cloud.senac.library.adapter.in.dto.UsuarioDto;
 import com.cloud.senac.library.adapter.out.entity.Usuario;
-import com.cloud.senac.library.adapter.in.mapper.IGenericMapper;
 import com.cloud.senac.library.adapter.out.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
-public class UsuarioService implements IGenericService<UsuarioDto> {
+public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final IGenericMapper<UsuarioDto, Usuario> usuarioMapper;
 
-    @Override
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
+
     public UsuarioDto Cadastrar(UsuarioDto usuarioDto) {
         checkIfUsuarioDtoIsValid(usuarioDto);
         Usuario usuario = usuarioMapper.toEntity(usuarioDto);
@@ -32,7 +29,6 @@ public class UsuarioService implements IGenericService<UsuarioDto> {
         }
     }
 
-    @Override
     public UsuarioDto Editar(UsuarioDto usuarioDto) {
         checkIfUsuarioDtoIsValid(usuarioDto);
         if (usuarioDto.getId() == null) {
@@ -50,7 +46,6 @@ public class UsuarioService implements IGenericService<UsuarioDto> {
         return usuarioMapper.toDTO(usuario);
     }
 
-    @Override
     public void Excluir(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Precisa ser fornecido o id do usuário para a exclusão");
@@ -58,7 +53,6 @@ public class UsuarioService implements IGenericService<UsuarioDto> {
         usuarioRepository.deleteById(id);
     }
 
-    @Override
     public List<UsuarioDto> Listar(UsuarioDto usuarioDto) {
         if (usuarioDto.getNome() != null && !usuarioDto.getNome().isBlank()) {
             return usuarioRepository.findUsuarioByName(usuarioDto.getNome()).stream()
