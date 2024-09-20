@@ -1,7 +1,7 @@
 package com.cloud.senac.library.adapter.in.controller;
 
 import com.cloud.senac.library.adapter.in.dto.UsuarioDto;
-import com.cloud.senac.library.core.service.IGenericService;
+import com.cloud.senac.library.core.port.in.IGenericService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

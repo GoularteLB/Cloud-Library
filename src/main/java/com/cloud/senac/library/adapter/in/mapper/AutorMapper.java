@@ -1,7 +1,7 @@
 package com.cloud.senac.library.adapter.in.mapper;
 
 import com.cloud.senac.library.adapter.in.dto.AutorDto;
-import com.cloud.senac.library.adapter.out.entity.Autor;
+import com.cloud.senac.library.core.domain.Autor;
 import org.springframework.stereotype.Component;
 
 @Component
